@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mirela Candles — ароматни свещи, направени с любов</title>
+  <meta name="description" content="Ръчно изработени ароматни свещи-десерти, свещи-коктейли и букети от восък. Поръчай свещ по твой вкус — цвят, аромат и декорация.">
+  <meta name="theme-color" content="#fff6f0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Great+Vibes&family=Nunito:wght@400;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/sections.css">
+  <link rel="stylesheet" href="css/fx.css">
+</head>
+<body>
+
+<!-- глобален лоудър (MC.loader.show/hide за заявки към бекенда) -->
+<div class="loader" id="loader" role="status" aria-live="polite">
+  <div class="loader-inner">
+    <div class="loader-candle" aria-hidden="true">
+      <svg class="loader-ring" viewBox="0 0 120 120"><circle cx="60" cy="60" r="54" /></svg>
+      <span class="loader-jar"><span class="wick on loader-wick"><span class="flame"><i></i></span></span></span>
+    </div>
+    <p class="loader-logo" aria-hidden="true"><span>Mirela</span>candles</p>
+    <p class="loader-text" id="loader-text">Паля свещите…</p>
+  </div>
+</div>
+
+<canvas id="fx-canvas" aria-hidden="true"></canvas>
+
+<!-- кибритена клечка, която следва курсора -->
+<div id="match" class="match" aria-hidden="true">
+  <span class="match-stick"></span><span class="match-head"></span>
+  <span class="wick match-wick"><span class="flame"><i></i></span></span>
+  <span class="match-grip"></span>
+</div>
+
+<header class="nav" id="nav">
+  <div class="nav-inner shell">
+    <a class="logo" id="logo" href="#top" aria-label="Mirela Candles — начало">
+      <!-- точката на „i“ е пламъче: гасне от вятъра (бърза мишка), пали се с клик или кибрит -->
+      <span class="logo-script" aria-hidden="true">M<span class="logo-i">ı<span class="wick logo-wick"><span class="flame"><i></i></span></span></span>rela</span><span class="logo-sub" aria-hidden="true">candles</span>
+    </a>
+    <nav class="nav-links" id="nav-links" aria-label="Основна навигация">
+      <a href="#shop">Свещи</a>
+      <a href="#builder">Създай своя</a>
+      <a href="#aromas">Аромати</a>
+      <a href="#about">За мен</a>
+      <a href="#order" class="nav-cta">Поръчай</a>
+    </nav>
+    <div class="nav-actions">
+      <button class="icon-btn" id="sound-btn" aria-label="Изключи звука" aria-pressed="true">
+        <svg viewBox="0 0 24 24" class="ico-on"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/><path d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>
+        <svg viewBox="0 0 24 24" class="ico-off"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/><path d="M17 9l5 6M22 9l-5 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </button>
+      <button class="cart-btn" id="cart-btn" aria-label="Кошница за поръчка">
+        <svg viewBox="0 0 24 24"><path d="M5 9h14l-1.4 9.2a2 2 0 0 1-2 1.8H8.4a2 2 0 0 1-2-1.8L5 9z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M9 9V7a3 3 0 0 1 6 0v2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        <span class="cart-count" id="cart-count">0</span>
+      </button>
+      <button class="burger" id="burger" aria-label="Меню" aria-expanded="false"><span></span><span></span></button>
+    </div>
+    <button class="lamp-cord" id="lamp-cord" aria-label="Угаси лампите" title="Дръпни ме">
+      <span class="cord-line"></span><span class="cord-bead"></span><span class="cord-tip">дръпни</span>
+    </button>
+  </div>
+</header>
+
+<main>
+<!-- ================= HERO ================= -->
+<section class="hero" id="top">
+  <div class="hero-glow" aria-hidden="true"></div>
+  <div class="hero-inner">
+    <div class="hero-copy">
+      <p class="eyebrow">Ароматни свещи · ръчна изработка</p>
+      <h1>Сладки свещи,<br><em>направени с любов</em></h1>
+      <p class="lead">Свещи-десерти, свещи-коктейли и букети от ароматен восък. Всяка излиза от ръцете на Мирела и ухае на нещо вкусно.</p>
+      <div class="hero-ctas">
+        <a class="btn btn-primary" href="#shop">Разгледай свещите</a>
+        <a class="btn btn-ghost" href="#builder">Създай своя</a>
+      </div>
+    </div>
+
+    <div class="hero-stage" id="hero-stage">
+      <div class="hero-table" id="hero-table"></div>
+
+      <div class="matchbox" id="matchbox" role="button" tabindex="0" aria-label="Вземи клечка кибрит">
+        <div class="mb-drawer"><span class="mb-heads"><i></i><i></i><i></i><i></i><i></i><i></i></span></div>
+        <div class="mb-sleeve">
+          <span class="mb-label"><b>Mirela</b><small>safety matches</small></span>
+          <span class="mb-strike" id="mb-strike"></span>
+        </div>
+      </div>
+
+      <div class="hint" id="hero-hint" aria-live="polite">
+        <span class="hint-step" id="hint-step">1</span>
+        <span class="hint-text" id="hint-text">Вземи клечка от кутийката</span>
+      </div>
+      <div class="hero-tools">
+        <button class="chip-btn" id="light-all">✨ Запали всички</button>
+      </div>
+    </div>
+  </div>
+  <a class="scroll-cue" href="#shop" aria-label="Надолу"><span></span></a>
+</section>
+
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <span>Handmade with love</span><b>✿</b><span>Свещи-десерти</span><b>✿</b><span>Свещи-коктейли</span><b>✿</b><span>Букети от восък</span><b>✿</b><span>Подаръци за всеки повод</span><b>✿</b><span>По твоя идея</span><b>✿</b>
+    <span>Handmade with love</span><b>✿</b><span>Свещи-десерти</span><b>✿</b><span>Свещи-коктейли</span><b>✿</b><span>Букети от восък</span><b>✿</b><span>Подаръци за всеки повод</span><b>✿</b><span>По твоя идея</span><b>✿</b>
+  </div>
+</div>
+
+<!-- ================= SHOP ================= -->
+<section class="section shop" id="shop">
+  <div class="section-head reveal">
+    <p class="eyebrow">Колекцията</p>
+    <h2>Избери своята <em>сладка</em> свещ</h2>
+    <p class="sub" data-touch-text="Натисни 🔥, за да запалиш свещ, или хвани кибрита долу вляво и я запали сама с пръст 😉">Натисни 🔥, за да запалиш свещ, или вземи кибрит и я запали сама. Внимавай, ако минеш бързо покрай пламъка, ще го угасиш 😉</p>
+  </div>
+  <div class="filters reveal" id="filters" role="tablist" aria-label="Категории"></div>
+  <div class="products" id="products"></div>
+  <p class="night-tip reveal">💡 Пробвай да дръпнеш шнура горе вдясно, за да угасиш лампите.</p>
+</section>
+
+<!-- ================= BUILDER ================= -->
+<section class="section builder" id="builder">
+  <div class="section-head reveal">
+    <p class="eyebrow">Работилницата</p>
+    <h2>Създай <em>своята</em> свещ</h2>
+    <p class="sub">Избери съд, цвят, декорация и аромат и гледай как свещта се прави пред очите ти. Мирела ще я направи точно така.</p>
+  </div>
+  <div class="builder-wrap reveal">
+    <div class="builder-preview">
+      <div class="preview-stage" id="preview"></div>
+      <span class="preview-price" id="preview-price" aria-hidden="true">20 €</span>
+      <div class="preview-bar">
+        <button class="chip-btn" id="preview-light" aria-label="Запали"><span class="ico">🔥</span><span class="txt">Запали</span></button>
+        <button class="chip-btn" id="preview-random" aria-label="Изненадай ме"><span class="ico">🎲</span><span class="txt">Изненадай ме</span></button>
+      </div>
+      <!-- на мобилно: стъпки (на десктоп е скрито) -->
+      <div class="b-stepper" id="b-stepper" role="tablist" aria-label="Стъпки"></div>
+    </div>
+    <div class="builder-steps" id="builder-steps">
+      <div class="b-step" data-name="Съд"><h3><span>1</span> Съд</h3><div class="opts" id="opt-vessel"></div></div>
+      <div class="b-step" data-name="Цвят"><h3><span>2</span> Цвят на восъка <label class="mini-toggle"><input type="checkbox" id="two-tone"> двуцветна</label></h3><div class="swatches" id="opt-wax"></div><div class="swatches swatches-2" id="opt-wax2"></div></div>
+      <div class="b-step" data-name="Декор"><h3><span>3</span> Декорация <small>до 3</small></h3><div class="opts opts-wrap" id="opt-top"></div></div>
+      <div class="b-step" data-name="Аромат"><h3><span>4</span> Аромат <small>до 2</small></h3><div class="opts opts-wrap" id="opt-aroma"></div></div>
+      <div class="b-step b-step-row" data-name="Детайли">
+        <div><h3><span>5</span> Панделка</h3><div class="swatches" id="opt-ribbon"></div></div>
+        <div class="label-field"><h3><span>6</span> Надпис на етикета</h3><input type="text" id="opt-label" maxlength="16" placeholder="Handmade with love"></div>
+      </div>
+      <div class="b-pager" id="b-pager">
+        <button class="chip-btn" id="b-prev">← Назад</button>
+        <button class="btn btn-primary btn-sm" id="b-next">Напред →</button>
+      </div>
+      <div class="b-summary" data-name="Готово">
+        <div><p class="b-name" id="b-name">Моята свещ</p><p class="b-desc" id="b-desc"></p></div>
+        <div class="b-price"><small>ориентировъчно</small><strong id="b-price">20 €</strong></div>
+        <button class="btn btn-primary" id="b-add">Добави в кошницата</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= AROMAS ================= -->
+<section class="section aromas" id="aromas">
+  <div class="section-head reveal">
+    <p class="eyebrow">Ароматният бар</p>
+    <h2>Помириши с <em>очите</em></h2>
+    <p class="sub" data-touch-text="Докосни бурканче, за да „усетиш“ аромата. Избери до два и ги сложи в своята свещ.">Задръж мишката над бурканчето, за да „усетиш“ аромата. Избери до два и ги сложи в своята свещ.</p>
+  </div>
+  <div class="aroma-switch reveal" role="tablist">
+    <button class="is-active" data-list="year" role="tab">Целогодишни</button>
+    <button data-list="xmas" role="tab">Коледни ❄️</button>
+  </div>
+  <div class="aroma-shelf reveal" id="aroma-shelf"></div>
+  <div class="aroma-mix" id="aroma-mix">
+    <div class="mix-jar" id="mix-jar"><span class="mix-a"></span><span class="mix-b"></span></div>
+    <div><p class="mix-label">Твоят микс</p><p class="mix-name" id="mix-name">Избери аромати от рафта ↑</p></div>
+    <button class="btn btn-primary btn-sm" id="mix-use" disabled>Сложи го в моята свещ</button>
+  </div>
+</section>
+
+<!-- ================= OCCASIONS ================= -->
+<section class="section occasions" id="occasions">
+  <div class="section-head reveal">
+    <p class="eyebrow">Подаръци</p>
+    <h2>За всеки <em>повод</em></h2>
+    <p class="sub">Натисни повод и виж какво става 🙂</p>
+  </div>
+  <div class="occ-grid" id="occ-grid"></div>
+</section>
+
+<!-- ================= STORY (scroll) ================= -->
+<section class="story" id="story">
+  <div class="story-sticky">
+    <div class="story-copy">
+      <p class="eyebrow">Зад кадър</p>
+      <h2>Как се ражда <em>една свещ</em></h2>
+      <ol class="story-steps" id="story-steps">
+        <li><b>Разтапям восъка</b><span>бавно, на ниска температура</span></li>
+        <li><b>Добавям аромата</b><span>капка по капка, докато ухае „точно така“</span></li>
+        <li><b>Наливам на слоеве</b><span>всеки слой изстива, преди да дойде следващият</span></li>
+        <li><b>Декорирам на ръка</b><span>„сметана“ от восък, ягоди, гофрети, мечета</span></li>
+        <li><b>Панделка, етикет и… пламък</b><span>и е готова да зарадва някого</span></li>
+      </ol>
+    </div>
+    <div class="story-stage" id="story-stage"></div>
+  </div>
+</section>
+
+<!-- ================= ABOUT ================= -->
+<section class="section about" id="about">
+  <div class="about-wrap">
+    <div class="polaroid reveal" id="polaroid">
+      <div class="polaroid-img" id="polaroid-img"><span class="sunflower" aria-hidden="true"></span></div>
+      <p class="polaroid-cap">Мирела 🌻</p>
+      <span class="tape"></span>
+    </div>
+    <div class="about-copy reveal">
+      <p class="eyebrow">Здравей!</p>
+      <h2>Аз съм <em>Мирела</em></h2>
+      <p>Свещите започнаха като хоби и се превърнаха в моята малка сладка работилница. Всяка свещ е мини десерт, коктейл или букет: излята, декорирана и опакована на ръка, с много търпение и още повече любов.</p>
+      <p>Обожавам поръчките по твоя идея. Кажи ми повода, любимия аромат и цвят, а аз ще направя нещо, което няма да намериш никъде другаде.</p>
+      <p class="signature">с любов, Мирела</p>
+      <div class="stats">
+        <div><strong data-count="16">0</strong><span>целогодишни аромата</span></div>
+        <div><strong data-count="8">0</strong><span>коледни аромата</span></div>
+        <div><strong data-count="100" data-suffix="%">0</strong><span>ръчна изработка</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= REVIEWS ================= -->
+<section class="section reviews" id="reviews">
+  <div class="section-head reveal">
+    <p class="eyebrow">Отзиви</p>
+    <h2>Мили <em>думи</em></h2>
+  </div>
+  <!-- примерни текстове: да се заменят с реалните от хайлайта „Отзиви“ -->
+  <div class="notes">
+    <figure class="note reveal" style="--r:-3deg"><blockquote>Свещта-коктейл беше хитът на рождения ден. Всички питаха откъде е! 🍸</blockquote><figcaption>— В.</figcaption></figure>
+    <figure class="note reveal" style="--r:2deg"><blockquote>Ухае невероятно, а изглежда толкова истинска, че щях да я опитам 😅🍓</blockquote><figcaption>— Д.</figcaption></figure>
+    <figure class="note reveal" style="--r:-1.5deg"><blockquote>Поръчах светещия букет за мама за 8 март. Разплака се от радост 🌸</blockquote><figcaption>— Н.</figcaption></figure>
+    <figure class="note reveal" style="--r:3deg"><blockquote>Опаковката, панделката, картичката… личи, че е правено с любов ❤️</blockquote><figcaption>— С.</figcaption></figure>
+  </div>
+</section>
+
+<!-- ================= FAQ ================= -->
+<section class="section faq" id="faq">
+  <div class="section-head reveal">
+    <p class="eyebrow">Въпроси</p>
+    <h2>Често <em>питате</em></h2>
+  </div>
+  <div class="faq-list reveal">
+    <details><summary>Как да поръчам?</summary><p>Добави свещи в кошницата или създай своя в работилницата и изпрати запитване от формата. Можеш да ми пишеш и директно в Instagram или да звъннеш.</p></details>
+    <details><summary>Мога ли да избера аромат, цвят и надпис?</summary><p>Разбира се! Почти всичко е по поръчка: аромат, цветове, декорация, панделка и надпис на етикета.</p></details>
+    <details><summary>Колко време отнема изработката?</summary><p>Зависи от поръчката и сезона. Ще ти кажа точен срок, когато ми пишеш. Преди празници е добре да поръчаш по-рано 🎄</p></details>
+    <details><summary>Как да паля свещта правилно?</summary><p>Първото палене нека е 2–3 часа, докато целият горен слой се разтопи. Подрязвай фитила до около 5 мм и никога не оставяй горяща свещ без надзор.</p></details>
+    <details><summary>Ядат ли се? 😄</summary><p>Не, колкото и вкусни да изглеждат! Всички „десерти“ са от ароматен восък. Пазете ги от деца и домашни любимци.</p></details>
+  </div>
+</section>
+
+<!-- ================= ORDER ================= -->
+<section class="section order" id="order">
+  <div class="order-wrap">
+    <div class="order-copy reveal">
+      <p class="eyebrow">Поръчка</p>
+      <h2>Да направим нещо <em>специално</em></h2>
+      <p>Попълни формата и ще ти пиша с цена и срок. Предпочиташ на лично? Пиши ми в Instagram или звънни.</p>
+      <div class="contact-cards">
+        <a class="contact-card" href="tel:+359884625259"><span>📞</span><div><small>Телефон</small><b>0884 625 259</b></div></a>
+        <a class="contact-card" href="https://www.instagram.com/mirela_candles/" target="_blank" rel="noopener"><span>📸</span><div><small>Instagram</small><b>@mirela_candles</b></div></a>
+      </div>
+    </div>
+    <form class="order-form reveal" id="order-form" novalidate>
+      <div class="f-row">
+        <label class="field"><span>Име *</span><input name="name" required autocomplete="name" placeholder="Как да те наричам?"></label>
+        <label class="field"><span>Телефон *</span><input name="phone" type="tel" required autocomplete="tel" placeholder="08..."></label>
+      </div>
+      <label class="field"><span>Какво искаш да поръчаш? *</span><textarea name="items" id="f-items" rows="3" required placeholder="Напр. свещ-коктейл „Синя Хавай“ ×2"></textarea></label>
+      <div class="f-row">
+        <label class="field"><span>Аромат</span><select name="aroma" id="f-aroma"><option>Нека Мирела предложи ✨</option></select></label>
+        <label class="field"><span>Повод</span><select name="occasion" id="f-occasion"><option>Подарък</option><option>Рожден ден</option><option>Коледа</option><option>Свети Валентин</option><option>8 март</option><option>Сватба / кръщене</option><option>Просто така 🙂</option></select></label>
+      </div>
+      <div class="f-row">
+        <label class="field"><span>За кога ти трябва?</span><input name="date" type="date" id="f-date"></label>
+        <label class="field"><span>Instagram (по желание)</span><input name="insta" placeholder="@твоят_профил"></label>
+      </div>
+      <label class="field"><span>Бележка</span><textarea name="note" rows="2" placeholder="Цветове, надпис, идеи…"></textarea></label>
+      <label class="check"><input type="checkbox" name="gift" checked> <span>Искам подаръчна опаковка с панделка 🎀</span></label>
+      <button class="btn btn-primary btn-lg" type="submit">Изпрати поръчката 🕯️</button>
+      <div class="form-success" id="form-success" hidden>
+        <div class="gift-box"><span class="gb-lid"></span><span class="gb-body"></span><span class="gb-ribbon"></span></div>
+        <h3 id="success-title">Благодаря!</h3>
+        <p>Получих поръчката ти и ще ти пиша до 24 часа 🕯️</p>
+        <button type="button" class="btn btn-ghost btn-sm" id="success-close">Нова поръчка</button>
+      </div>
+    </form>
+  </div>
+</section>
+
+<section class="insta-band reveal">
+  <a href="https://www.instagram.com/mirela_candles/" target="_blank" rel="noopener" class="insta-link">
+    <span>Още сладки неща всеки ден в</span><b>@mirela_candles</b>
+  </a>
+  <div class="insta-row" id="insta-row"></div>
+</section>
+</main>
+
+<footer class="footer">
+  <div class="footer-inner shell">
+    <a class="logo" href="#top"><span class="logo-script">Mirela</span><span class="logo-sub">candles</span></a>
+    <p>Ароматни свещи, направени с любов.<br>За поръчки ми пишете на лично 🌸</p>
+    <div class="footer-links">
+      <a href="tel:+359884625259">0884 625 259</a>
+      <a href="https://www.instagram.com/mirela_candles/" target="_blank" rel="noopener">Instagram</a>
+    </div>
+  </div>
+  <div class="footer-bottom shell">
+    <span>© 2026 Mirela Candles</span>
+    <a href="https://stoychev.studio/" target="_blank" rel="noopener" class="credit">Сайт от <b>Stoychev Studio</b></a>
+  </div>
+</footer>
+
+<!-- кошница -->
+<div class="drawer-backdrop" id="drawer-backdrop"></div>
+<aside class="cart-drawer" id="cart" aria-label="Кошница" aria-hidden="true">
+  <div class="cart-head"><h3>Кошница за поръчка</h3><button class="icon-btn" id="cart-close" aria-label="Затвори">✕</button></div>
+  <div class="cart-items" id="cart-items"></div>
+  <div class="cart-foot">
+    <div class="cart-total"><span>Ориентировъчно</span><b id="cart-total">0 €</b></div>
+    <button class="btn btn-primary" id="cart-send">Изпрати запитване</button>
+    <p class="cart-note">Без плащане онлайн. Мирела ще ти пише с точна цена.</p>
+  </div>
+</aside>
+
+<button class="fab-match" id="fab-match" aria-label="Вземи запалена клечка кибрит" title="Вземи кибрит">
+  <span class="fab-box"></span><span class="fab-stick"></span>
+</button>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="js/data.js"></script>
+<script src="js/candles.js"></script>
+<script src="js/fx.js"></script>
+<script src="js/hero.js"></script>
+<script src="js/shop.js"></script>
+<script src="js/builder.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
